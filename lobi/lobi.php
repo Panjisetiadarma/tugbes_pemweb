@@ -46,7 +46,7 @@
         <div class="card" data-link="daily-check.html">
             <h3>Daily Check In</h3>
             <p>Day 5/7</p>
-            <button><a href="../rizal/fiturpoint.html"> More Detail →</a></button>
+            <button><a href="../MENTORING 2/fiturpoint.html"> More Detail →</a></button>
         </div>
         
         <div class="card" data-link="service.html">

@@ -49,7 +49,7 @@ include '../navbar/koneksi.php';
     <div class="menu-list">
     <a href="../tukangservis/rating.php" style="color:#000; text-decoration: none;" class="menu-item"><span class="icon">👥</span> Rating</a>
     <a href="../guide/guide.html" style="color:#000; text-decoration: none;" class="menu-item"><span class="icon">❓</span> Guide</a>
-    <a href="qoin.php" style="color:#000; text-decoration: none;" class="menu-item"><span class="icon">⬢</span> Qoin</a>
+    <a href="../MENTORING 2/fiturpoint.html" style="color:#000; text-decoration: none;" class="menu-item"><span class="icon">⬢</span> Qoin</a>
     <a href="../lobi/logout.php" style="color:#000; text-decoration: none;" class="menu-item"><span class="icon">↩️</span> Sign Out</a>
   </div>
 
