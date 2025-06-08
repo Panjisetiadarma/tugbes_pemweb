@@ -1,13 +1,17 @@
 <?php
+// admin.php
 require_once 'koneksi.php';
 
+// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['tipe']) && $_POST['tipe'] === 'Katalog') {
+        // Handle katalog submission
         $judul = $_POST['judul'];
         $deskripsi = $_POST['deskripsi'];
         $harga = $_POST['harga'];
-        $kategori = $_POST['kategori'];
-
+        $kategori = $_POST['kategori']; // Ambil kategori dari form
+        
+        // Handle image upload
         $gambar = '';
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
             $target_dir = "uploads/";
@@ -18,42 +22,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file);
             $gambar = $target_file;
         }
-
+        
         $stmt = $koneksi->prepare("INSERT INTO produk (judul, deskripsi, harga, gambar, kategori) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("ssiss", $judul, $deskripsi, $harga, $gambar, $kategori);
         $stmt->execute();
-
+        
     } elseif (isset($_POST['tipe']) && $_POST['tipe'] === 'Voucher') {
+        // Handle voucher submission
         $judul = $_POST['judulVoucher'];
-        $deskripsi = $_POST['deskripsiVoucher'];
-        $waktu_akhir = $_POST['tanggalKedaluwarsa'];
-        $jenisPotongan = $_POST['jenisPotongan'];
-
-        // Ambil nilai potongan sesuai tipe
-        if ($jenisPotongan === 'rp') {
-            $potongan = $_POST['potonganRp'];
-            $tipePotongan = 'rupiah';
-        } else {
-            $potongan = $_POST['potonganPersen'];
-            $tipePotongan = 'persen';
-        }
-
-        $stmt = $koneksi->prepare("INSERT INTO voucher (judul, deskripsi, potongan, tipe_potongan, waktu_akhir) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssiss", $judul, $deskripsi, $potongan, $tipePotongan, $waktu_akhir);
+        $potongan = $_POST['potongan'];
+        
+        $stmt = $koneksi->prepare("INSERT INTO voucher (judul, potongan) VALUES (?, ?)");
+        $stmt->bind_param("si", $judul, $potongan);
         $stmt->execute();
     }
 }
 
-// Ambil data produk & voucher
-$produk = $koneksi->query("SELECT 'Katalog' as tipe, id, judul, deskripsi, harga, '-' as potongan, gambar, kategori, '-' as tipe_potongan FROM produk");
-$voucher = $koneksi->query("SELECT 'Voucher' as tipe, id, judul, deskripsi, '-' as harga, potongan, '-' as gambar, '-' as kategori, tipe_potongan FROM voucher");
+// Get data from database
+$produk = $koneksi->query("SELECT 'Katalog' as tipe, id, judul, deskripsi, harga, '-' as potongan, gambar, kategori FROM produk");
+$voucher = $koneksi->query("SELECT 'Voucher' as tipe, id, judul, '-' as deskripsi, '-' as harga, potongan, '-' as gambar, '-' as kategori FROM voucher");
 
-// Gabungkan data
+// Combine results
 $data = [];
 while ($row = $produk->fetch_assoc()) $data[] = $row;
 while ($row = $voucher->fetch_assoc()) $data[] = $row;
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -96,21 +89,7 @@ while ($row = $voucher->fetch_assoc()) $data[] = $row;
         <td><?= htmlspecialchars($item['judul']) ?></td>
         <td><?= htmlspecialchars($item['deskripsi']) ?></td>
         <td><?= $item['tipe'] === 'Katalog' ? 'Rp ' . number_format($item['harga'], 0, ',', '.') : '-' ?></td>
-<td>
-  <?php
-    if ($item['tipe'] === 'Voucher') {
-        if ($item['tipe_potongan'] === 'persen') {
-            echo $item['potongan'] . '%';
-        } else {
-            echo 'Rp ' . number_format($item['potongan'], 0, ',', '.');
-        }
-    } else {
-        echo '-';
-    }
-  ?>
-</td>
-
-
+        <td><?= $item['tipe'] === 'Voucher' ? 'Rp ' . number_format($item['potongan'], 0, ',', '.') : '-' ?></td>
         <td><?= $item['gambar'] !== '-' && !empty($item['gambar']) ? '<img src="' . htmlspecialchars($item['gambar']) . '" class="preview" />' : '-' ?></td>
         <td><?= htmlspecialchars($item['kategori']) ?></td>
         <td>
@@ -209,7 +188,7 @@ while ($row = $voucher->fetch_assoc()) $data[] = $row;
           </div>
           <div class="mb-3" id="inputPotonganPersen" style="display: none;">
             <label class="form-label">Jumlah Potongan (%)</label>
-            <input type="number" class="form-control" name="potonganPersen" min="0" max="100">
+           <input type="number" class="form-control" name="potonganPersen" min="0" max="100">
           </div>
         </div>
         <div class="modal-footer">
@@ -313,8 +292,7 @@ while ($row = $voucher->fetch_assoc()) $data[] = $row;
     };
   }
 
-
-    // Toggle input field antara potongan Rp dan potongan %
+  // Toggle input field antara potongan Rp dan potongan %
   document.getElementById("radioRp").addEventListener("change", function () {
     document.getElementById("inputPotonganRp").style.display = "block";
     document.getElementById("inputPotonganPersen").style.display = "none";
@@ -324,8 +302,10 @@ while ($row = $voucher->fetch_assoc()) $data[] = $row;
     document.getElementById("inputPotonganRp").style.display = "none";
     document.getElementById("inputPotonganPersen").style.display = "block";
   });
+
+
+
+ 
 </script>
 </body>
 </html>
-
-

@@ -1,95 +1,100 @@
-<?php
-// Data voucher statis (tanpa database)
-$vouchers = [
-    [
-        'id' => 1,
-        'title' => 'Diskon 10%',
-        'description' => 'Dapatkan potongan 10% untuk servis motor Anda.',
-        'expiry_date' => '2025-12-31'
-    ],
-    [
-        'id' => 2,
-        'title' => 'Gratis Oli',
-        'description' => 'Gratis oli mesin untuk setiap servis lengkap.',
-        'expiry_date' => '2025-07-15'
-    ],
-    [
-        'id' => 3,
-        'title' => 'Servis Gratis',
-        'description' => '1x servis gratis setelah 5x servis berbayar.',
-        'expiry_date' => '2025-08-01'
-    ]
-];
-?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitur Reward Voucher</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .voucher-item {
-            background-color: #f5f5f5;
-            padding: 15px;
-            margin: 15px auto;
-            border-radius: 8px;
-            max-width: 600px;
-        }
-        .voucher-item h2 {
-            margin-top: 0;
-        }
-        .voucher-item button {
-            margin-top: 10px;
-            background-color: #007bff;
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vouchel</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-
-<!-- NAVIGATION BAR -->
-<div class="navbar">
+  <!-- NAVIGATION BAR -->
+  <div class="navbar d-flex justify-content-between px-3 py-2 bg-light">
     <div class="nav-left">
-        <a href="javascript:history.back()">
-            <img src="gambar1.png" alt="kembali" class="img-content">
-        </a>
-    </div>
-    <div class="nav-center">
-        <h1 class="link-text">Reward Voucher</h1>
+      <button class="btn-icon border-0 bg-transparent">
+        <img src="gambar1.png" alt="Kiri" width="50" height="40">
+      </button>
     </div>
     <div class="nav-right">
-        <a href="favorit.html"><img src="gambar2.png" alt="love" class="img-right"></a>
-        <a href="keranjang.html"><img src="gambar3.png" alt="toko" class="img-right"></a>
+      <button class="btn-icon border-0 bg-transparent">
+        <img src="gambar3.png" alt="Kanan" width="50" height="40">
+      </button>
     </div>
-</div>
+  </div>
 
-<div class="container">
-<h1 style="text-align: center;">Daftar Voucher</h1>
+  <h2 class="my-5 text-center">vouchel</h2>
 
-    <?php if (!empty($vouchers)): ?>
-        <?php foreach ($vouchers as $voucher): ?>
-            <div class="voucher-item">
-                <h2><?= htmlspecialchars($voucher['title']) ?></h2>
-                <p><?= htmlspecialchars($voucher['description']) ?></p>
-                <p class="expiry-date">Kedaluwarsa: <?= date("d F Y", strtotime($voucher['expiry_date'])) ?></p>
-                <button onclick="klaimVoucher(<?= $voucher['id'] ?>)">Klaim Voucher</button>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>Tidak ada voucher tersedia.</p>
-    <?php endif; ?>
-</div>
+  <div class="container text-center">
+    <p>Lihat vouchel mu setiap hari untuk mendapatkan promo menarik!</p>
 
-<script>
-function klaimVoucher(id) {
-    alert("Voucher dengan ID " + id + " berhasil diklaim!");
-}
-</script>
+    <!-- Voucher akan ditampilkan di sini -->
+    <div class="row" id="voucher-list"></div>
+  </div>
 
+  <footer class="mt-5"></footer>
+
+  <!-- Script ambil data reward -->
+  <script>
+fetch('get_voucher.php')
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById('voucher-list');
+
+    if (!Array.isArray(data) || data.length === 0) {
+        container.innerHTML = '<p class="col-12">Tidak ada voucher tersedia saat ini.</p>';
+        return;
+    }
+
+    data.forEach((item, index) => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4';
+
+        col.innerHTML = `
+        <div class="card mb-4">
+          <div class="card-header bg-light">vouchel</div>
+          <div class="card-body">
+            <h5 class="card-title">${item.nama}</h5>
+            <p> ${item.deskripsi}</p>
+            <p>Berlaku sampai: ${item.berlaku}</p>
+          </div>
+          <div class="card-footer">
+           <a href="#" class="btn btn-primary accept-btn" data-nama="${item.nama}">Accept</a>
+          </div>
+        </div>
+        `;
+
+        container.appendChild(col);
+    });
+  })
+  .catch(error => {
+    console.error('Gagal memuat voucher:', error);
+    document.getElementById('voucher-list').innerHTML = '<p class="col-12">Gagal memuat voucher.</p>';
+  });
+
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('accept-btn')) {
+    e.preventDefault();
+    const voucherNama = e.target.getAttribute('data-nama');
+
+    fetch('accept_voucher.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'nama=' + encodeURIComponent(voucherNama)
+    })
+    .then(response => response.text())
+    .then(result => {
+      alert(result); // Misal: "Voucher berhasil disimpan!"
+    });
+  }
+});
+
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

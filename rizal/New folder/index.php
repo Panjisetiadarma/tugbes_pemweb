@@ -269,7 +269,7 @@
     <nav class="subnav">
       <ul>
         <li><a href="wishlist.php">wishlist</a></li>
-        <li><a href="Reward.php">voucher</a></li>
+        <li><a href="#">vouchel</a></li>
         <li><a href="admin.php">admin</a></li>
       </ul>
     </nav>
