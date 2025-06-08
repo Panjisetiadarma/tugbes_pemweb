@@ -40,13 +40,13 @@
         <div class="card" data-link="catalog.html">
             <h3>Catalog</h3>
             <p>Service Package Sparepart</p>
-            <button><a href="../rizal/katalog.html"> More Detail →</a></button>
+            <button><a href="../rizal/index.php"> More Detail →</a></button>
         </div>
 
         <div class="card" data-link="daily-check.html">
             <h3>Daily Check In</h3>
             <p>Day 5/7</p>
-            <button><a href="../rizal/fiturpoint.html"> More Detail →</a></button>
+            <button><a href="../MENTORING 2/fiturpoint.html"> More Detail →</a></button>
         </div>
         
         <div class="card" data-link="service.html">
