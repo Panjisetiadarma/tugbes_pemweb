@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function showMethods(method) {
+            document.getElementById("otherMethods").style.display = (method === 'other') ? 'block' : 'none';
+            document.getElementById("bankMethods").style.display = (method === 'bank') ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Metode Pembayaran</h2>
+        <div class="payment-methods">
+            <button onclick="showMethods('bank')">Transfer Bank</button>
+            <button onclick="showMethods('other')">Metode Lainnya</button>
+        </div>
+
+        <div id="otherMethods" style="display: none;">
+            <h3>Pilih Metode Pembayaran</h3>
+            <form>
+                <label><input type="radio" name="payment" value="QRIS"> QRIS</label><br>
+                <label><input type="radio" name="payment" value="DANA"> DANA</label><br>
+            </form>
+        </div>
+
+        <div id="bankMethods" style="display: none;">
+            <h3>Pilih Bank</h3>
+            <form>
+                <label><input type="radio" name="payment" value="BCA"> Bank BCA</label><br>
+                <label><input type="radio" name="payment" value="Mandiri"> Bank Mandiri</label><br>
+                <label><input type="radio" name="payment" value="BNI"> Bank BNI</label><br>
+                <label><input type="radio" name="payment" value="BRI"> Bank BRI</label><br>
+            </form>
+        </div>
+
+        <button type="submit">Bayar</button>
+        <p class="note">Pembayaran bisa dilakukan menggunakan metode QRIS, DANA, atau transfer bank.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7fafc; /* Latar belakang abu-abu muda */
+            color: #333;
+            line-height: 1.;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff; /* Latar belakang putih */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50; /* Warna judul */
+        }
+        .bill-item {
+            border: 1px solid #e2e8f0; /* Border abu-abu */
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9; /* Latar belakang item tagihan */
+        }
+        .bill-item h2 {
+            margin-bottom: 10px;
+            color: #4a5568; /* Warna sub-judul */
+        }
+        .bill-item p {
+            margin-bottom: 5px;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .pay-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #367bfc; /* Biru */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        .pay-button:hover {
+            background-color: #2b6cb0; /* Warna saat hover */
+        }
+        .navbar {
+      background-color: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .nav-left img {
+      width: 50px;
+    }
+
+    .nav-center {
+      flex: 1;
+      text-align: center;
+    }
+
+    .link-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: black;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 10px;
+    }
+
+    .img-right {
+      width: 40px;
+      padding-right: 20px;
+    }
+
+    .img-right:hover {
+      transform: scale(1.1);
+    }

@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+
+h2 {
+    margin: 0 0 20px;
+}
+
+
+.payment-methods {
+    margin-bottom: 20px;
+}
+
+
+.payment-methods button {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.payment-methods .active {
+    background-color: #555;
+    color: white;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+label {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+
+select {
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+
+button[type="submit"] {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

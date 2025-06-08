@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "../tubes web"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "html"
+	}
+}

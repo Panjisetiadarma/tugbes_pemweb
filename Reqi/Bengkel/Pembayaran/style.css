@@ -1,0 +1,102 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px;
+}
+.container {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 500px;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+h3 {
+  text-align: left;
+  margin-bottom: 15px;
+  margin-top: 25px;
+}
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+input[type="number"], input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.item-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.item-row input {
+  flex: 1;
+}
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button.remove {
+  background-color: #dc3545;
+}
+.result {
+  margin-top: 25px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.result span {
+  float: right;
+}
+.total {
+  font-weight: bold;
+  font-size: 18px;
+  border-top: 1px solid #ccc;
+  margin-top: 15px;
+  padding-top: 10px;
+}
+.payment-methods {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin: 20px 0;
+}
+.payment-methods button {
+  background-color: #007bff;
+}
+.note {
+  font-size: 14px;
+  margin-top: 15px;
+  color: #666;
+}
+#otherMethods, #bankMethods {
+  margin-top: 10px;
+}
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.close-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  font-size: 18px;
+  padding: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

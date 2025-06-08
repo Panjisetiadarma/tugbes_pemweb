@@ -1,0 +1,97 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7fafc;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 80px auto 20px;
+    padding: 20px;
+}
+
+.navbar {
+    background-color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid #ccc;
+}
+
+.nav-left img {
+    width: 50px;
+}
+
+.nav-center {
+    flex: 1;
+    text-align: center;
+}
+
+.link-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.nav-right {
+    display: flex;
+    gap: 10px;
+}
+
+.img-right {
+    width: 40px;
+    padding-right: 20px;
+}
+
+.img-right:hover {
+    transform: scale(1.1);
+}
+
+.voucher-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.voucher-item h2 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.voucher-item p {
+    margin-bottom: 8px;
+}
+
+.expiry-date {
+    color: red;
+    font-weight: bold;
+}
+
+.claim-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #42a3ff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.claim-button:hover {
+    background-color: #2b6cb0;
+}
