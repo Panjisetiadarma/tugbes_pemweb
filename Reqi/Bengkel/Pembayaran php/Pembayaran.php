@@ -1,18 +1,10 @@
 <?php 
 include 'koneksi.php';
 
-// Ambil data dari tabel keranjang beserta informasi produk
-$query = "SELECT k.*, p.nama_produk, p.harga 
-          FROM keranjang k 
-          JOIN produk_jasa p ON k.produk_id = p.id_produk";
+// Ambil semua data dari tabel produk_jasa
+$query = "SELECT * FROM produk_jasa";
 $result = mysqli_query($conn, $query);
-$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
-$subtotal = 0;
-
-// Hitung subtotal awal
-foreach($items as $item) {
-    $subtotal += $item['harga'] * $item['jumlah'];
-}
+$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +22,16 @@ foreach($items as $item) {
     }
 
     function updateTotal() {
-      let subtotal = <?php echo $subtotal; ?>;
+      const hargaInputs = document.querySelectorAll('.harga');
+      const qtyInputs = document.querySelectorAll('.qty');
+      let subtotal = 0;
+
+      for (let i = 0; i < hargaInputs.length; i++) {
+        const harga = parseFloat(hargaInputs[i].value) || 0;
+        const qty = parseInt(qtyInputs[i].value) || 0;
+        subtotal += harga * qty;
+      }
+
       const voucher = parseFloat(document.getElementById("voucher").value) || 0;
       const ongkir = parseFloat(document.getElementById("ongkir").value) || 0;
 
@@ -42,27 +43,6 @@ foreach($items as $item) {
       document.getElementById("ongkirText").textContent = formatRupiah(ongkir);
       document.getElementById("totalText").textContent = formatRupiah(total);
     }
-
-    function showMethods(method) {
-      document.querySelector(".payment-methods").style.display = "none";
-      document.getElementById("bankMethods").style.display = "none";
-      document.getElementById("otherMethods").style.display = "none";
-
-      if (method === 'bank') {
-        document.getElementById("bankMethods").style.display = 'block';
-      } else if (method === 'other') {
-        document.getElementById("otherMethods").style.display = 'block';
-      }
-    }
-
-    function resetPayment() {
-      document.querySelector(".payment-methods").style.display = "flex";
-      document.getElementById("bankMethods").style.display = "none";
-      document.getElementById("otherMethods").style.display = "none";
-
-      const radios = document.querySelectorAll('input[name="payment"]');
-      radios.forEach(r => r.checked = false);
-    }
   </script>
 </head>
 <body>
@@ -71,13 +51,12 @@ foreach($items as $item) {
 
     <form method="POST" action="proses_pembayaran.php">
       <div id="itemList">
-        <label>Daftar Barang</label>
-        <?php foreach($items as $item): ?>
+        <label>Daftar Produk</label>
+        <?php foreach($products as $product): ?>
           <div class="item-row">
-            <input type="text" value="<?= htmlspecialchars($item['nama_produk']) ?>" readonly>
-            <input type="number" value="<?= $item['harga'] ?>" readonly>
-            <input type="number" value="<?= $item['jumlah'] ?>" name="itemQty[<?= $item['id'] ?>]" oninput="updateTotal()">
-            <a href="hapus_item.php?id=<?= $item['id'] ?>" class="remove">✕</a>
+            <input type="text" value="<?= htmlspecialchars($product['nama_produk']) ?>" readonly>
+            <input type="number" class="harga" value="<?= $product['harga'] ?>" readonly>
+            <input type="number" class="qty" name="qty[<?= $product['id_produk'] ?>]" min="0" value="0" oninput="updateTotal()">
           </div>
         <?php endforeach; ?>
       </div>
@@ -115,10 +94,10 @@ foreach($items as $item) {
       </div>
 
       <div class="result">
-        <div>Subtotal <span id="subtotalText"><?= "Rp" . number_format($subtotal, 2, ',', '.') ?></span></div>
+        <div>Subtotal <span id="subtotalText">Rp0,00</span></div>
         <div>Voucher <span id="voucherText">-Rp0,00</span></div>
         <div>Ongkir <span id="ongkirText">Rp0,00</span></div>
-        <div class="total">Total Estimasi <span id="totalText"><?= "Rp" . number_format($subtotal * 1.11, 2, ',', '.') ?></span></div>
+        <div class="total">Total Estimasi <span id="totalText">Rp0,00</span></div>
       </div>
 
       <button type="submit">Bayar</button>
