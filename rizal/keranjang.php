@@ -239,7 +239,14 @@ if ($result && $result->num_rows > 0) {
                 <p>Total Harga: IDR <span id="total-all-price"><?= number_format($totalAllPrice, 0, ',', '.'); ?></span> </p>
             </div>
             <div class="fitur-checkout">
-                <button type="submit" onclick="checkout()">Checkout</button>
+              <form id="checkoutForm" method="post" action="Pembayaran.php">
+                <?php foreach ($cartItems as $item): ?>
+                    <input type="hidden" name="items[][name]" value="<?= htmlspecialchars($item['judul']) ?>">
+                    <input type="hidden" name="items[][price]" value="<?= $item['harga'] ?>">
+                    <input type="hidden" name="items[][qty]" value="<?= $item['jumlah'] ?>">
+                <?php endforeach; ?>
+                <button type="submit">Checkout</button>
+            </form>
             </div>
         </div>
     </div>
@@ -318,16 +325,9 @@ if ($result && $result->num_rows > 0) {
             .catch(err => console.error("Error:", err));
         }
 
-        function checkout() {
-            const selectedItems = document.querySelectorAll('.item-checkbox:checked');
-            if (selectedItems.length === 0) {
-                alert("Pilih minimal satu produk untuk checkout");
-                return;
-            }
-            
-            
-            alert("Checkout berhasil!");
-        }
+       function checkout() {
+        document.getElementById('checkoutForm').submit();
+    }
 
 function addToFavorites() {
     const checkboxes = document.querySelectorAll(".item-checkbox:checked");
