@@ -1,18 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$db = "toko_online";
-
-$conn = mysqli_connect($host, $user, $password, $db);
-
-if (!$conn) {
-    http_response_code(500);
-    echo json_encode(["error" => "Koneksi gagal"]);
-    exit;
-}
+include 'koneksi.php';
 
 $query = "SELECT * FROM voucher";
 $result = mysqli_query($conn, $query);

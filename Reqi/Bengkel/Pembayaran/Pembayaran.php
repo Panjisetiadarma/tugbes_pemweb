@@ -1,4 +1,20 @@
-<?php include 'koneksi.php'; ?>
+<?php 
+include 'koneksi.php';
+
+// Ambil data dari tabel keranjang beserta informasi produk
+$query = "SELECT k.*, p.nama_produk, p.harga 
+          FROM keranjang k 
+          JOIN produk_jasa p ON k.produk_id = p.id_produk";
+$result = mysqli_query($conn, $query);
+$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$subtotal = 0;
+
+// Hitung subtotal awal
+foreach($items as $item) {
+    $subtotal += $item['harga'] * $item['jumlah'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -13,37 +29,8 @@
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(angka);
     }
 
-    function addItem() {
-      const itemList = document.getElementById("itemList");
-
-      const itemRow = document.createElement("div");
-      itemRow.className = "item-row";
-
-      itemRow.innerHTML = `
-        <input type="text" placeholder="Nama barang" oninput="updateTotal()" name="itemName[]">
-        <input type="number" placeholder="Harga" oninput="updateTotal()" name="itemPrice[]">
-        <input type="number" placeholder="Jumlah" oninput="updateTotal()" name="itemQty[]">
-        <button class="remove" onclick="removeItem(this)">✕</button>
-      `;
-
-      itemList.appendChild(itemRow);
-    }
-
-    function removeItem(btn) {
-      btn.parentElement.remove();
-      updateTotal();
-    }
-
     function updateTotal() {
-      let subtotal = 0;
-      const itemRows = document.querySelectorAll(".item-row");
-
-      itemRows.forEach(row => {
-        const harga = parseFloat(row.children[1].value) || 0;
-        const jumlah = parseFloat(row.children[2].value) || 0;
-        subtotal += harga * jumlah;
-      });
-
+      let subtotal = <?php echo $subtotal; ?>;
       const voucher = parseFloat(document.getElementById("voucher").value) || 0;
       const ongkir = parseFloat(document.getElementById("ongkir").value) || 0;
 
@@ -76,19 +63,24 @@
       const radios = document.querySelectorAll('input[name="payment"]');
       radios.forEach(r => r.checked = false);
     }
-
-    window.onload = () => addItem();
   </script>
 </head>
 <body>
   <div class="container">
     <h2>Estimasi Pembayaran</h2>
 
-    <form method="POST" action="koneksi.php">
+    <form method="POST" action="proses_pembayaran.php">
       <div id="itemList">
         <label>Daftar Barang</label>
+        <?php foreach($items as $item): ?>
+          <div class="item-row">
+            <input type="text" value="<?= htmlspecialchars($item['nama_produk']) ?>" readonly>
+            <input type="number" value="<?= $item['harga'] ?>" readonly>
+            <input type="number" value="<?= $item['jumlah'] ?>" name="itemQty[<?= $item['id'] ?>]" oninput="updateTotal()">
+            <a href="hapus_item.php?id=<?= $item['id'] ?>" class="remove">✕</a>
+          </div>
+        <?php endforeach; ?>
       </div>
-      <button type="button" onclick="addItem()">+ Tambah Barang</button>
 
       <label for="voucher">Voucher Diskon (Rp)</label>
       <input type="number" id="voucher" name="voucher" placeholder="misal: 10000" oninput="updateTotal()">
@@ -123,10 +115,10 @@
       </div>
 
       <div class="result">
-        <div>Subtotal <span id="subtotalText">Rp0,00</span></div>
+        <div>Subtotal <span id="subtotalText"><?= "Rp" . number_format($subtotal, 2, ',', '.') ?></span></div>
         <div>Voucher <span id="voucherText">-Rp0,00</span></div>
         <div>Ongkir <span id="ongkirText">Rp0,00</span></div>
-        <div class="total">Total Estimasi <span id="totalText">Rp0,00</span></div>
+        <div class="total">Total Estimasi <span id="totalText"><?= "Rp" . number_format($subtotal * 1.11, 2, ',', '.') ?></span></div>
       </div>
 
       <button type="submit">Bayar</button>
