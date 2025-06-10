@@ -1,8 +1,15 @@
 <?php
-include 'koneksi.php';
 header('Content-Type: application/json');
 
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "toko_online";
 
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die(json_encode(["error" => "Koneksi gagal"]));
+}
 
 // Ambil semua produk dalam wishlist dengan field yang sesuai
 $sql = "SELECT p.id, p.judul, p.deskripsi, p.harga, p.gambar, p.kategori 

@@ -1,5 +1,4 @@
 <?php
-include 'koneksi.php';
 header('Content-Type: application/json');
 
 $input = json_decode(file_get_contents("php://input"), true);
@@ -15,6 +14,16 @@ if (!$judul || !$harga) {
     exit;
 }
 
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "toko_online";
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    echo json_encode(["success" => false, "message" => "Koneksi gagal"]);
+    exit;
+}
 
 // Cek apakah produk dengan judul ini sudah ada di tabel produk
 $stmt = $conn->prepare("SELECT id FROM produk WHERE judul = ?");

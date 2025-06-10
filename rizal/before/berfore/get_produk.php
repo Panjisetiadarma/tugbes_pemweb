@@ -1,10 +1,18 @@
 <?php
-include 'koneksi.php';
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "toko_online";
 
-
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Koneksi gagal: ' . $conn->connect_error]);
+    exit;
+}
 
 $kategori = $_GET['kategori'] ?? '';
 if (empty($kategori)) {

@@ -291,7 +291,6 @@ function renderProducts() {
     `;
   } else {
     filtered.forEach(p => {
-      
 // Ganti p.name dengan p.judul
 productList.innerHTML += `
   <div class="product-card">
@@ -303,7 +302,6 @@ productList.innerHTML += `
       <span style="font-size: 18px; font-weight: bold;">Rp ${p.harga.toLocaleString('id-ID')}</span>
       <br />
       <button onclick="tambahKeKeranjang(${p.id})">Masuk Keranjang</button>
-           <button class="hapus-btn" onclick="hapusDariWishlist(${p.id})">Hapus</button>
     </div>
   </div>
 `;
@@ -328,30 +326,7 @@ function tambahKeKeranjang(id) {
     }
   });
 }
-function hapusDariWishlist(produkId) {
-  if (!confirm('Apakah Anda yakin ingin menghapus produk ini dari wishlist?')) {
-    return;
-  }
-  
-  fetch('hapus_wishlist.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ produk_id: produkId }) // Ubah menjadi 'produk_id'
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      products = products.filter(p => p.id !== produkId);
-      renderProducts();
-    } else {
-      alert("Gagal menghapus: " + (data.message || 'Produk tidak ditemukan'));
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Terjadi kesalahan jaringan.');
-  });
-}
+
 
 
   // Event toggle filter panel
