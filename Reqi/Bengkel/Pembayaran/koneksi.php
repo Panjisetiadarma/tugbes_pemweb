@@ -2,7 +2,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'pembayaran';
+$database = 'toko_online';
 
 try {
     $conn = new mysqli($host, $username, $password, $database);

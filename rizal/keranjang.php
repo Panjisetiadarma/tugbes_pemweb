@@ -239,7 +239,7 @@ if ($result && $result->num_rows > 0) {
                 <p>Total Harga: IDR <span id="total-all-price"><?= number_format($totalAllPrice, 0, ',', '.'); ?></span> </p>
             </div>
             <div class="fitur-checkout">
-              <form id="checkoutForm" method="post" action="Pembayaran.php">
+              <form id="checkoutForm" method="post" action="../reqi/Bengkel/Pembayaran/Pembayaran.php">
                 <?php foreach ($cartItems as $item): ?>
                     <input type="hidden" name="items[][name]" value="<?= htmlspecialchars($item['judul']) ?>">
                     <input type="hidden" name="items[][price]" value="<?= $item['harga'] ?>">

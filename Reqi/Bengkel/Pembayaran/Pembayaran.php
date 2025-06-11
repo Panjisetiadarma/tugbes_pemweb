@@ -47,14 +47,14 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </head>
 <body>
   <div class="container">
-    <h1>Estimasi Pembayaran</h1>
+    <h2>Estimasi Pembayaran</h2>
 
     <form method="POST" action="proses_pembayaran.php">
       <div id="itemList">
         <label>Daftar Produk</label>
         <?php foreach($products as $product): ?>
           <div class="item-row">
-            <input type="text" value="<?= htmlspecialchars($product['nama']) ?>" readonly>
+            <input type="text" value="<?= htmlspecialchars($product['judul']) ?>" readonly>
             <input type="number" class="harga" value="<?= $product['harga'] ?>" readonly>
             <input type="number" class="qty" name="qty[<?= $product['id'] ?>]" min="0" value="0" oninput="updateTotal()">
           </div>
