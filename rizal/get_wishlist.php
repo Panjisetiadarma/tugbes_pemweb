@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 
 
-// Ambil semua produk dalam wishlist dengan field yang sesuai
+// Ambil produk dalam wishlist 
 $sql = "SELECT p.id, p.judul, p.deskripsi, p.harga, p.gambar, p.kategori 
         FROM wishlist w 
         JOIN produk p ON w.produk_id = p.id";

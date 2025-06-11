@@ -85,7 +85,7 @@
     #filter-panel {
       display: none;
       position: absolute;
-      top: 100%; /* tepat di bawah tombol */
+      top: 100%; 
       left: 0;
       width: 300px;
       background-color: rgba(255, 255, 255, 0.95);
@@ -111,7 +111,7 @@
       background-color:  #4eb5de;
       padding: 10px;
       border-radius: 6px;
-      width: 280px; /* agar muat di panel */
+      width: 280px; 
       box-sizing: border-box;
     }
 
@@ -292,7 +292,7 @@ function renderProducts() {
   } else {
     filtered.forEach(p => {
       
-// Ganti p.name dengan p.judul
+
 productList.innerHTML += `
   <div class="product-card">
     <div class="product-info">
@@ -336,7 +336,7 @@ function hapusDariWishlist(produkId) {
   fetch('hapus_wishlist.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ produk_id: produkId }) // Ubah menjadi 'produk_id'
+    body: JSON.stringify({ produk_id: produkId }) 
   })
   .then(res => res.json())
   .then(data => {

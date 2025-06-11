@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shopee Header Clone</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- logo dari online -->
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <style>
     * {
@@ -280,7 +280,7 @@
     <div class="slider-container">
       <button class="prev" onclick="slideBack()">❮</button>
       <div class="slides">
-        <a href="#"><img src="gambar/iklan1.jpg" alt="Iklan 1"></a>
+        <a href="Reward.php"><img src="gambar/iklan1.jpg" alt="Iklan 1"></a>
        
       </div>
       <button class="next" onclick="slideForward()">❯</button>
@@ -314,12 +314,17 @@
     let index = 0;
     const slides = document.querySelector('.slides');
     const totalSlides = document.querySelectorAll('.slides a').length;
-
+    const slideDuration = 5000;
     function slideForward() {
       if (index < totalSlides - 1) {
         index++;
         slides.style.transform = `translateX(${-index * 100}%)`;
-      }
+        } else {
+    index = 0; 
+  }
+     setInterval(slideForward, slideDuration);
+
+      
     }
 
     function slideBack() {
@@ -428,7 +433,7 @@ window.showContent = cat => {
   fetch(`get_produk.php?kategori=${cat}`)
     .then(response => response.json())
     .then(data => {
-      console.log("Data diterima:", data); // Tambahkan ini
+      console.log("Data diterima:", data); 
       buatKonten(data);
     })
     .catch(err => console.error("Gagal memuat data:", err));

@@ -5,7 +5,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 $cartId = $data['cartId'];
 $change = (int)$data['change'];
 
-// Ambil data keranjang saat ini
+// Ambil data
 $sql = "SELECT jumlah, produk_id FROM keranjang WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $cartId);
@@ -21,7 +21,7 @@ $row = $result->fetch_assoc();
 $currentQuantity = (int)$row['jumlah'];
 $newQuantity = $currentQuantity + $change;
 
-// Validasi kuantitas minimal 1
+// Validasi kuantitas minimal 
 if ($newQuantity < 1) {
     $newQuantity = 1;
 }

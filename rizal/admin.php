@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $waktu_akhir = $_POST['tanggalKedaluwarsa'];
         $jenisPotongan = $_POST['jenisPotongan'];
 
-        // Ambil nilai potongan sesuai tipe
+        // if persen atau ruopiah
         if ($jenisPotongan === 'rp') {
             $potongan = $_POST['potonganRp'];
             $tipePotongan = 'rupiah';
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $produk = $koneksi->query("SELECT 'Katalog' as tipe, id, judul, deskripsi, harga, '-' as potongan, gambar, kategori, '-' as tipe_potongan FROM produk");
 $voucher = $koneksi->query("SELECT 'Voucher' as tipe, id, judul, deskripsi, '-' as harga, potongan, '-' as gambar, '-' as kategori, tipe_potongan FROM voucher");
 
-// Gabungkan data
+// Gabungan data
 $data = [];
 while ($row = $produk->fetch_assoc()) $data[] = $row;
 while ($row = $voucher->fetch_assoc()) $data[] = $row;
@@ -248,11 +248,11 @@ while ($row = $voucher->fetch_assoc()) $data[] = $row;
     const cells = row.querySelectorAll("td");
     const tipe = cells[0].innerText;
 
-    // index kolom yang bisa diedit
-    const editableIndexes = tipe === "Katalog" ? [1, 2, 3, 6] : [1, 4]; // Tambah index 6 (kategori) untuk Katalog
+    
+    const editableIndexes = tipe === "Katalog" ? [1, 2, 3, 6] : [1, 4]; 
     editableIndexes.forEach(i => {
       const val = cells[i].innerText.replace("Rp ", "").trim();
-      if (i === 6) { // Jika kolom kategori
+      if (i === 6) { 
         const select = document.createElement("select");
         select.className = "form-select form-select-sm";
         select.innerHTML = `
@@ -286,7 +286,7 @@ while ($row = $voucher->fetch_assoc()) $data[] = $row;
         if (i === 3 || i === 4) {
           cells[i].innerHTML = `Rp ${val}`;
         } else if (i === 6) {
-          cells[i].innerHTML = val; // Kategori tidak perlu format Rp
+          cells[i].innerHTML = val; 
         } else {
           cells[i].innerHTML = val;
         }
@@ -314,7 +314,7 @@ while ($row = $voucher->fetch_assoc()) $data[] = $row;
   }
 
 
-    // Toggle input field antara potongan Rp dan potongan %
+    // Toggle input  potongan Rp dan potongan %
   document.getElementById("radioRp").addEventListener("change", function () {
     document.getElementById("inputPotonganRp").style.display = "block";
     document.getElementById("inputPotonganPersen").style.display = "none";

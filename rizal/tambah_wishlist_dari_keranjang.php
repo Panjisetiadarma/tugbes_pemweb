@@ -14,12 +14,12 @@ if (empty($produk_ids) || !$user_id) {
 $koneksi->begin_transaction();
 
 try {
-    // Siapkan prepared statement untuk cek dan insert
+    
     $cekStmt = $koneksi->prepare("SELECT COUNT(*) FROM wishlist WHERE user_id = ? AND produk_id = ?");
     $insertStmt = $koneksi->prepare("INSERT INTO wishlist (user_id, produk_id) VALUES (?, ?)");
 
     foreach ($produk_ids as $produk_id) {
-        // Cek apakah produk sudah ada di wishlist user ini
+        // Cek apaka produk 
         $cekStmt->bind_param("ii", $user_id, $produk_id);
         $cekStmt->execute();
         $cekStmt->bind_result($count);

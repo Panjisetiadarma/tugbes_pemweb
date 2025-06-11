@@ -174,7 +174,7 @@ if ($result && $result->num_rows > 0) {
             </div>
         </div>
         <div class="favorit-icon">
-            <a href="favorit.html">
+            <a href="wishlist.php">
                 <span class="material-symbols-outlined">favorite</span>
             </a>
         </div>
@@ -257,7 +257,7 @@ if ($result && $result->num_rows > 0) {
             checkboxes.forEach(cb => cb.checked = checkbox.checked);
         }
 
-        // Fungsi untuk update kuantitas
+        //  update kuantitas
         function updateQuantity(cartId, change) {
             fetch('update_quantity.php', {
                 method: 'POST',

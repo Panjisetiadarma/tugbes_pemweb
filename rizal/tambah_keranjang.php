@@ -16,7 +16,7 @@ if (!$judul || !$harga) {
 }
 
 
-// Cek apakah produk dengan judul ini sudah ada di tabel produk
+// Cek apakah produk 
 $stmt = $conn->prepare("SELECT id FROM produk WHERE judul = ?");
 $stmt->bind_param("s", $judul);
 $stmt->execute();
@@ -26,14 +26,14 @@ $row = $res->fetch_assoc();
 if ($row) {
     $produk_id = $row['id'];
 } else {
-    // Tambahkan ke tabel produk jika belum ada
+  
     $stmt = $conn->prepare("INSERT INTO produk (judul, deskripsi, harga, gambar, kategori) VALUES (?, ?, ?, ?, '')");
     $stmt->bind_param("ssis", $judul, $deskripsi, $harga, $gambar);
     $stmt->execute();
     $produk_id = $stmt->insert_id;
 }
 
-// Cek apakah sudah ada di keranjang
+// Cek  keranjang
 $stmt = $conn->prepare("SELECT id, jumlah FROM keranjang WHERE produk_id = ?");
 $stmt->bind_param("i", $produk_id);
 $stmt->execute();
@@ -47,7 +47,7 @@ if ($existing) {
     $stmt->bind_param("ii", $new_jumlah, $existing['id']);
     $stmt->execute();
 } else {
-    // Tambahkan item baru ke keranjang
+    // Tambahkan item
     $stmt = $conn->prepare("INSERT INTO keranjang (produk_id, jumlah) VALUES (?, ?)");
     $stmt->bind_param("ii", $produk_id, $jumlah);
     $stmt->execute();

@@ -10,7 +10,7 @@ if ($produk_id === null) {
     exit;
 }
 
-// Tambahkan pengecekan keberadaan produk
+//  pengecekan produk
 $check = $koneksi->prepare("SELECT * FROM wishlist WHERE produk_id = ?");
 $check->bind_param("i", $produk_id);
 $check->execute();
