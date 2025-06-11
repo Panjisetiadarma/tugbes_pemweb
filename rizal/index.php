@@ -270,7 +270,7 @@
       <ul>
         <li><a href="wishlist.php">wishlist</a></li>
         <li><a href="Reward.php">voucher</a></li>
-        <li><a href="admin.php">admin</a></li>
+        <li><a href="../Reqi/Bengkel/Reward/Reward.php">admin</a></li>
       </ul>
     </nav>
   </header>
