@@ -2,7 +2,7 @@
 include 'koneksi.php';
 
 // Ambil semua data dari tabel produk_jasa
-$query = "SELECT * FROM produk_jasa";
+$query = "SELECT * FROM produk";
 $result = mysqli_query($conn, $query);
 $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
@@ -54,9 +54,9 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <label>Daftar Produk</label>
         <?php foreach($products as $product): ?>
           <div class="item-row">
-            <input type="text" value="<?= htmlspecialchars($product['nama_produk']) ?>" readonly>
+            <input type="text" value="<?= htmlspecialchars($product['nama']) ?>" readonly>
             <input type="number" class="harga" value="<?= $product['harga'] ?>" readonly>
-            <input type="number" class="qty" name="qty[<?= $product['id_produk'] ?>]" min="0" value="0" oninput="updateTotal()">
+            <input type="number" class="qty" name="qty[<?= $product['id'] ?>]" min="0" value="0" oninput="updateTotal()">
           </div>
         <?php endforeach; ?>
       </div>
