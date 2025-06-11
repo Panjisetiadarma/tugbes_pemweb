@@ -47,7 +47,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </head>
 <body>
   <div class="container">
-    <h2>Estimasi Pembayaran</h2>
+    <h1>Estimasi Pembayaran</h1>
 
     <form method="POST" action="proses_pembayaran.php">
       <div id="itemList">
