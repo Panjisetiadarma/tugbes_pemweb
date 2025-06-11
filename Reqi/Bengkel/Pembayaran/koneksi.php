@@ -2,7 +2,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'toko_online';
+$database = 'tubes_pemweb';
 
 try {
     $conn = new mysqli($host, $username, $password, $database);
